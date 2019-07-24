@@ -7,36 +7,11 @@ const navList = [
   { key: 'Meta', text: 'Meta' }
 ];
 
-const App: React.FC = () => {
+const Main: React.FC = () => {
   const [selectedNavs, setSelectedNavs] = useState([navList[0].key]);
 
-  function renderContent() {
-    switch (selectedNavs[0]) {
-      default:
-      case 'Home': {
-        return 
-      }
-      case 'Meta': {
-
-      }
-    }
-  }
   return (
-    <div className="App">
-      <Menu
-        mode="horizontal"
-        theme="dark"
-        selectedKeys={selectedNavs}
-        onSelect={({item, key, keyPath}) => {
-          setSelectedNavs(keyPath);
-        }}
-      >
-        {
-          navList.map((nav) => (
-            <Menu.Item key={nav.key}>{nav.text}</Menu.Item>
-          ))
-        }
-      </Menu>
+    <div className="Main">
       <div className="App-content">
         <Button>xxxx</Button>
       </div>
@@ -44,4 +19,4 @@ const App: React.FC = () => {
   );
 };
 
-export default memo(App);
+export default memo(Main);

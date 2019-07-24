@@ -1,25 +1,27 @@
 import React, {memo, useState} from 'react';
 import './index.css';
-import { Menu } from 'antd';
+import { Menu, Icon } from 'antd';
 import Main from '../pages/Main';
-import Meta from '../pages/Meta';
+import Comment from '../pages/Comment';
+import Category from '../pages/Category';
 
+const { SubMenu } = Menu;
 
-const navList = [
-  { key: 'Home', text: 'Home' },
-  { key: 'Meta', text: 'Meta' }
-];
+const defaultNavKeys = 'Comment';
 
 const App: React.FC = () => {
-  const [selectedNavs, setSelectedNavs] = useState([navList[0].key]);
+  const [selectedNav, selectNav] = useState(defaultNavKeys);
 
   function renderContent() {
-    switch (selectedNavs[0]) {
+    switch (selectedNav) {
       case 'Home': {
         return <Main />
       }
-      case 'Meta': {
-        return <Meta />
+      case 'Comment': {
+        return <Comment />
+      }
+      case 'Category': {
+        return <Category />
       }
     }
   }
@@ -28,16 +30,27 @@ const App: React.FC = () => {
       <Menu
         mode="horizontal"
         theme="dark"
-        selectedKeys={selectedNavs}
-        onSelect={({item, key, keyPath}) => {
-          setSelectedNavs(keyPath);
+        selectedKeys={[selectedNav]}
+        onClick={(e) => {
+          selectNav(e.key);
         }}
       >
-        {
-          navList.map((nav) => (
-            <Menu.Item key={nav.key}>{nav.text}</Menu.Item>
-          ))
-        }
+        <Menu.Item key="Home">
+          <Icon type="home" />
+          Home
+        </Menu.Item>
+        <SubMenu
+          key="Meta"
+          title={(
+            <>
+              <Icon type="tool" />
+              <span>Meta</span>
+            </>
+          )}
+        >
+          <Menu.Item key="Comment">评语</Menu.Item>
+          <Menu.Item key="Category">分类</Menu.Item>
+        </SubMenu>
       </Menu>
       <div className="App-content">
         {renderContent()}
