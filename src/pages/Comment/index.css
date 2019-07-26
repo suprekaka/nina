@@ -1,8 +1,8 @@
-.Meta {
+.Comment {
   padding: 20px;
 }
 
-.Meta-toolbar {
+.Comment-toolbar {
   display: flex;
   align-items: center;
   justify-content: center;

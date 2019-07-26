@@ -1,8 +1,8 @@
 import { message } from 'antd';
+import {ICategoryTree, ICommentItem, ICommentList} from '../typing';
 
 const categoryLocalKey = 'category';
 const commentLocalKey = 'comment';
-
 
 function read(key: string) {
   const str: string | null = localStorage.getItem(key);
@@ -22,7 +22,7 @@ function read(key: string) {
 function write(key: string, value: any): boolean {
   try {
     const str = JSON.stringify(value);
-    localStorage.setItem(categoryLocalKey, str);
+    localStorage.setItem(key, str);
     return true;
   } catch (e) {
     message.error('解析数据错误，输入的元数据格式不符合 JSON 规范，请检查修复后再试');
@@ -31,7 +31,7 @@ function write(key: string, value: any): boolean {
   }
 }
 
-export function readCategoryData() {
+export function readCategoryData(): ICategoryTree {
   return read(categoryLocalKey);
 }
 
@@ -39,10 +39,38 @@ export function writeCategoryData(value: any) {
   return write(categoryLocalKey, value);
 }
 
-export function readCommentData() {
+export function readCommentData(): ICommentList {
   return read(commentLocalKey);
 }
 
 export function writeCommentData(value: any) {
   return write(commentLocalKey, value);
+}
+
+export function getCommentByCategoryId(categoryId: number): ICommentItem | void {
+  const commentList = readCommentData();
+  if (!Array.isArray(commentList)) {
+    return;
+  }
+  return commentList.find(comment => comment.categoryId === categoryId);
+}
+
+export function updateCommentByCategoryId(categoryId: number, content: string) {
+  let commentList = readCommentData();
+  if (!Array.isArray(commentList)) {
+    commentList = [];
+  }
+  const comment = {
+    categoryId,
+    content,
+  };
+  const index = commentList.findIndex(comment => comment.categoryId === categoryId);
+  if (index < 0) {
+    // insert
+    commentList.push(comment);
+  } else {
+    // update
+    commentList[index] = comment;
+  }
+  return writeCommentData(commentList);
 }
