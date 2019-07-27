@@ -32,7 +32,7 @@ class Comment extends PureComponent<IProps> {
       if (err) {
         return;
       }
-      updateCommentByCategoryId(values.category, values.comment);
+      updateCommentByCategoryId(values.category, values.comment.toHTML());
       resetFields();
     });
   };
@@ -49,35 +49,48 @@ class Comment extends PureComponent<IProps> {
         <div className="Comment">
           <Form>
             <Form.Item label="分类">
-              {getFieldDecorator('category', {
-                rules: [{
-                  required: true,
-                  message: '请选择分类',
-                }],
-              })(
-                <CategoryTree onChange={this.handleCategoryChange} />
-              )}
+              {
+                getFieldDecorator(
+                  'category',
+                  {
+                    rules: [{
+                      required: true,
+                      message: '请选择分类',
+                    }],
+                  }
+                )(
+                  <CategoryTree onChange={this.handleCategoryChange} />
+                )
+              }
             </Form.Item>
 
             <Form.Item label="评语内容">
-              {getFieldDecorator('comment', {
-                validateTrigger: 'onBlur',
-                rules: [{
-                  required: true,
-                  validator: (_, value, callback) => {
-                    if (value.isEmpty()) {
-                      callback('请填写评语内容')
-                    } else {
-                      callback()
-                    }
+              {
+                getFieldDecorator(
+                  'comment',
+                  {
+                    validateTrigger: 'onBlur',
+                    rules: [{
+                      required: true,
+                      validator: (_, value, callback) => {
+                        if (value.isEmpty()) {
+                          callback('请填写评语内容')
+                        } else {
+                          callback()
+                        }
+                      }
+                    }],
                   }
-                }],
-              })(
-                <BraftEditor
-                  className="Comment-editor"
-                  placeholder="请输入正文内容"
-                />
-              )}
+                )(
+                  <BraftEditor
+                    className="Comment-editor"
+                    placeholder="请输入正文内容"
+                    contentStyle={{
+                      height: 350,
+                    }}
+                  />
+                )
+              }
             </Form.Item>
 
             <Form.Item>

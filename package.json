@@ -38,34 +38,22 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 1 chrome version"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 chrome version"
     ]
   },
   "homepage": "./",
   "build": {
-    "appId": "com.xxx.app",
+    "appId": "com.nina.app",
     "npmRebuild": true,
     "mac": {
       "category": "tools",
-      "icon": "build/icon.png"
-    },
-    "win": {
-      "icon": "build/icon.png",
-      "target": "nsis"
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "allowElevation": false,
-      "createDesktopShortcut": true,
-      "menuCategory": true,
-      "oneClick": false
+      "target": [
+        "dir",
+        "dmg"
+      ]
     },
     "files": [
       "build/**/*"

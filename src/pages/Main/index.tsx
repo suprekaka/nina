@@ -13,13 +13,13 @@ const Main: FC = () => {
     const comment: ICommentItem | undefined = getCommentByCategoryId(id);
     if (comment) {
       setCommentContent(comment.content);
-      copy();
+      copy(comment.content);
     }
   }
 
-  function copy() {
-    if (commentContent) {
-      const res = copyToClipboard(commentContent, {
+  function copy(content: string) {
+    if (content) {
+      const res = copyToClipboard(content, {
         debug: true,
         format: 'text/html',
       });
@@ -32,7 +32,7 @@ const Main: FC = () => {
   }
 
   function handleCopyBtnClick() {
-    copy();
+    copy(commentContent);
   }
 
   function renderPreviewContent() {
