@@ -3,15 +3,11 @@ import { Button, message, PageHeader } from 'antd';
 import { readCategoryData, writeCategoryData } from '../../model';
 import { ICategoryTree } from '../../typing';
 import CodeEditor from '../../components/CodeEditor';
-import exampleData from '../../example/category.json';
 import './index.css';
 
 const Category: React.FC = () => {
   const categoryTree: ICategoryTree = readCategoryData();
-  let categoryStrData: string = JSON.stringify(exampleData, undefined, 2);
-  if (categoryTree) {
-    categoryStrData = JSON.stringify(categoryTree, undefined, 2);
-  }
+  let categoryStrData = JSON.stringify(categoryTree, undefined, 2);
   const [content, setContent] = useState(categoryStrData);
 
   return (

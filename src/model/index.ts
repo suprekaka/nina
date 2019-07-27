@@ -1,5 +1,6 @@
 import { message } from 'antd';
-import {ICategoryTree, ICommentItem, ICommentList} from '../typing';
+import { ICategoryTree, ICommentItem, ICommentList } from '../typing';
+import categoryExampleData from '../example/category.json';
 
 const categoryLocalKey = 'category';
 const commentLocalKey = 'comment';
@@ -32,7 +33,12 @@ function write(key: string, value: any): boolean {
 }
 
 export function readCategoryData(): ICategoryTree {
-  return read(categoryLocalKey);
+  let res = read(categoryLocalKey);
+  if (!res) {
+    writeCategoryData(categoryExampleData);
+    res = readCategoryData();
+  }
+  return res;
 }
 
 export function writeCategoryData(value: any) {
@@ -47,7 +53,7 @@ export function writeCommentData(value: any) {
   return write(commentLocalKey, value);
 }
 
-export function getCommentByCategoryId(categoryId: number): ICommentItem | void {
+export function getCommentByCategoryId(categoryId: number): ICommentItem | undefined {
   const commentList = readCommentData();
   if (!Array.isArray(commentList)) {
     return;

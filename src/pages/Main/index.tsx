@@ -1,6 +1,6 @@
 import React, { FC, memo, useState } from 'react';
 import './index.css';
-import { PageHeader, Button, Card, Icon, message, Divider } from 'antd';
+import { PageHeader, Button, Card, Icon, message, Divider, Result } from 'antd';
 import CategoryTree from '../../components/CategoryTree';
 import { getCommentByCategoryId } from '../../model';
 import { ICommentItem } from '../../typing';
@@ -10,10 +10,11 @@ const Main: FC = () => {
   const [commentContent, setCommentContent] = useState();
 
   function handleCategoryChange(id: number) {
-    const comment: ICommentItem | void = getCommentByCategoryId(id);
-    const { content } = comment || { content: '' };
-    setCommentContent(content);
-    copy();
+    const comment: ICommentItem | undefined = getCommentByCategoryId(id);
+    if (comment) {
+      setCommentContent(comment.content);
+      copy();
+    }
   }
 
   function copy() {
@@ -32,6 +33,26 @@ const Main: FC = () => {
 
   function handleCopyBtnClick() {
     copy();
+  }
+
+  function renderPreviewContent() {
+    const shouldShowPreview = !!commentContent;
+    if (!shouldShowPreview) {
+      return (
+        <Result
+          status="info"
+          title="没有数据可预览"
+        />
+      )
+    }
+    return (
+      <div
+        className="Main-preview"
+        dangerouslySetInnerHTML={{
+          __html: commentContent
+        }}
+      />
+    );
   }
 
   return (
@@ -56,12 +77,7 @@ const Main: FC = () => {
         <div className="Main-previewWrapper">
           <Divider>预览</Divider>
           <Card>
-            <div
-              className="Main-preview"
-              dangerouslySetInnerHTML={{
-                __html: commentContent
-              }}
-            />
+            {renderPreviewContent()}
           </Card>
         </div>
       </div>
