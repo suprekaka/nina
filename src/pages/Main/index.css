@@ -1,0 +1,19 @@
+.Main {
+  padding: 0 20px;
+}
+
+.Main-filterWrapper {
+
+}
+
+.Main-copyBtn {
+  margin-top: 10px;
+}
+
+.Main-previewWrapper {
+  margin-top: 40px;
+}
+
+.Main-preview a {
+  color: inherit;
+}

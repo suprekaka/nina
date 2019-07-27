@@ -48,8 +48,8 @@ const App: React.FC = () => {
             </>
           )}
         >
-          <Menu.Item key="Comment">评语</Menu.Item>
           <Menu.Item key="Category">分类</Menu.Item>
+          <Menu.Item key="Comment">评语</Menu.Item>
         </SubMenu>
       </Menu>
       <div className="App-content">

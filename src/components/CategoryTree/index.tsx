@@ -4,7 +4,7 @@ import { ICategoryTree } from '../../typing';
 import { TreeNode, TreeSelectProps } from 'antd/lib/tree-select';
 import { readCategoryData } from '../../model';
 
-interface IProps {
+interface IProps extends TreeSelectProps<number> {
   dataSource?: ICategoryTree;
   onChange?: TreeSelectProps<any>['onChange'];
 }
@@ -30,6 +30,7 @@ const CategoryTree: FC<IProps> = (props) => {
   const {
     dataSource = readCategoryData(),
     onChange = () => {},
+    ...rest
   } = props;
   const [value, setValue] = useState();
 
@@ -40,10 +41,14 @@ const CategoryTree: FC<IProps> = (props) => {
 
   return (
     <TreeSelect
+      {...rest}
       showSearch
       treeNodeFilterProp="title"
       placeholder="请选择分类"
-      style={{ maxWidth: 600 }}
+      style={{
+        maxWidth: 600,
+        minWidth: 200,
+      }}
       value={value}
       dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
       treeData={parseData(dataSource)}

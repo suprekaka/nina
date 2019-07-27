@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './index.css';
-import { Button, Typography, Form } from 'antd';
+import { Button, Form, PageHeader } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import CategoryTree from '../../components/CategoryTree';
 import {
@@ -9,9 +9,6 @@ import {
 } from '../../model';
 import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/index.css';
-
-
-const { Title } = Typography;
 
 interface IProps extends FormComponentProps {}
 
@@ -47,52 +44,53 @@ class Comment extends PureComponent<IProps> {
       }
     } = this.props;
     return (
-      <div className="Comment">
-        <Title level={4}>输入评语内容</Title>
+      <>
+        <PageHeader title="评论内容录入" />
+        <div className="Comment">
+          <Form>
+            <Form.Item label="分类">
+              {getFieldDecorator('category', {
+                rules: [{
+                  required: true,
+                  message: '请选择分类',
+                }],
+              })(
+                <CategoryTree onChange={this.handleCategoryChange} />
+              )}
+            </Form.Item>
 
-        <Form>
-          <Form.Item label="分类">
-            {getFieldDecorator('category', {
-              rules: [{
-                required: true,
-                message: '请选择分类',
-              }],
-            })(
-              <CategoryTree onChange={this.handleCategoryChange} />
-            )}
-          </Form.Item>
-
-          <Form.Item label="评语内容">
-            {getFieldDecorator('comment', {
-              validateTrigger: 'onBlur',
-              rules: [{
-                required: true,
-                validator: (_, value, callback) => {
-                  if (value.isEmpty()) {
-                    callback('请填写评语内容')
-                  } else {
-                    callback()
+            <Form.Item label="评语内容">
+              {getFieldDecorator('comment', {
+                validateTrigger: 'onBlur',
+                rules: [{
+                  required: true,
+                  validator: (_, value, callback) => {
+                    if (value.isEmpty()) {
+                      callback('请填写评语内容')
+                    } else {
+                      callback()
+                    }
                   }
-                }
-              }],
-            })(
-              <BraftEditor
-                className="Comment-editor"
-                placeholder="请输入正文内容"
-              />
-            )}
-          </Form.Item>
+                }],
+              })(
+                <BraftEditor
+                  className="Comment-editor"
+                  placeholder="请输入正文内容"
+                />
+              )}
+            </Form.Item>
 
-          <Form.Item>
-            <Button
-              type="primary"
-              onClick={this.handleSave}
-            >
-              保存
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+            <Form.Item>
+              <Button
+                type="primary"
+                onClick={this.handleSave}
+              >
+                保存
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </>
     );
   }
 };
