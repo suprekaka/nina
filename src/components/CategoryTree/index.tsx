@@ -2,9 +2,10 @@ import React, { FC, memo, useState } from 'react';
 import { TreeSelect } from 'antd';
 import { ICategoryTree } from '../../typing';
 import { TreeNode, TreeSelectProps } from 'antd/lib/tree-select';
+import { readCategoryData } from '../../model';
 
 interface IProps {
-  dataSource: ICategoryTree;
+  dataSource?: ICategoryTree;
   onChange?: TreeSelectProps<any>['onChange'];
 }
 
@@ -27,7 +28,7 @@ function parseData(data: ICategoryTree): TreeNode[] {
 
 const CategoryTree: FC<IProps> = (props) => {
   const {
-    dataSource,
+    dataSource = readCategoryData(),
     onChange = () => {},
   } = props;
   const [value, setValue] = useState();

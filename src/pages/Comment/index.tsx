@@ -4,7 +4,6 @@ import { Button, Typography, Form } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import CategoryTree from '../../components/CategoryTree';
 import {
-  readCategoryData,
   updateCommentByCategoryId,
   getCommentByCategoryId,
 } from '../../model';
@@ -47,7 +46,6 @@ class Comment extends PureComponent<IProps> {
         getFieldDecorator
       }
     } = this.props;
-    const categoryData = readCategoryData();
     return (
       <div className="Comment">
         <Title level={4}>输入评语内容</Title>
@@ -60,7 +58,7 @@ class Comment extends PureComponent<IProps> {
                 message: '请选择分类',
               }],
             })(
-              <CategoryTree dataSource={categoryData} onChange={this.handleCategoryChange} />
+              <CategoryTree onChange={this.handleCategoryChange} />
             )}
           </Form.Item>
 
@@ -79,7 +77,7 @@ class Comment extends PureComponent<IProps> {
               }],
             })(
               <BraftEditor
-                className="my-editor"
+                className="Comment-editor"
                 placeholder="请输入正文内容"
               />
             )}

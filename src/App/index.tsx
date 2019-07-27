@@ -7,7 +7,7 @@ import Category from '../pages/Category';
 
 const { SubMenu } = Menu;
 
-const defaultNavKeys = 'Comment';
+const defaultNavKeys = 'Home';
 
 const App: React.FC = () => {
   const [selectedNav, selectNav] = useState(defaultNavKeys);
