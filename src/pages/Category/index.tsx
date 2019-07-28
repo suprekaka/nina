@@ -26,7 +26,11 @@ const Category: React.FC = () => {
             onClick={() => {
               try {
                 const obj = JSON.parse(content as string);
-                writeCategoryData(obj);
+                if (writeCategoryData(obj)) {
+                  message.success('保存成功');
+                } else {
+                  message.error('保存失败，请重试');
+                }
               } catch (e) {
                 message.error('填写的 JSON 数据格式错误，请检查后再试');
               }

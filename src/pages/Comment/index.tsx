@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './index.css';
-import { Button, Form, PageHeader } from 'antd';
+import { Button, Form, PageHeader, message } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import CategoryTree from '../../components/CategoryTree';
 import {
@@ -32,7 +32,12 @@ class Comment extends PureComponent<IProps> {
       if (err) {
         return;
       }
-      updateCommentByCategoryId(values.category, values.comment.toHTML());
+      const rt = updateCommentByCategoryId(values.category, values.comment.toHTML());
+      if (rt) {
+        message.success('保存成功');
+      } else {
+        message.error('保存失败，请重试');
+      }
       resetFields();
     });
   };

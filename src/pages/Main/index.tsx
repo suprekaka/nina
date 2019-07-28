@@ -14,6 +14,8 @@ const Main: FC = () => {
     if (comment) {
       setCommentContent(comment.content);
       copy(comment.content);
+    } else {
+      setCommentContent(undefined);
     }
   }
 
