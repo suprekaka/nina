@@ -1,6 +1,6 @@
 {
   "name": "nina",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "main": "public/electron.js",
   "scripts": {
@@ -49,10 +49,11 @@
     "appId": "com.nina.app",
     "npmRebuild": true,
     "mac": {
-      "category": "tools",
+      "category": "public.app-category.education",
       "target": [
         "dir",
-        "dmg"
+        "dmg",
+        "zip"
       ]
     },
     "files": [
